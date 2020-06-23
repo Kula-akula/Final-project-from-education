@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -12,14 +13,17 @@ import javax.persistence.*;
 @Setter
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "user_roles")
-public class UserRole {
+@Table(name = "roles")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
     @Column
     String role;
+
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
+    private List<User> users;
 
 //    @Column
 //    boolean isActive;

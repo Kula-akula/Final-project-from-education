@@ -1,16 +1,17 @@
 package TamilovKulanbek.FinalProject.Services.Implimitation;
 
+import TamilovKulanbek.FinalProject.Entities.Role;
 import TamilovKulanbek.FinalProject.Entities.User;
-import TamilovKulanbek.FinalProject.Entities.UserRole;
 import TamilovKulanbek.FinalProject.Exception.UserNotFoundException;
 import TamilovKulanbek.FinalProject.Exception.UserRegisterException;
 import TamilovKulanbek.FinalProject.Models.ResponseMessage;
 import TamilovKulanbek.FinalProject.Repositories.UserRepository;
-import TamilovKulanbek.FinalProject.Repositories.UserRoleRepository;
+import TamilovKulanbek.FinalProject.Repositories.RoleRepository;
 import TamilovKulanbek.FinalProject.Services.UserService;
 import TamilovKulanbek.FinalProject.dto.userDto.UserModel;
 import TamilovKulanbek.FinalProject.dto.userDto.UserFindModel;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserRoleRepository userRoleRepository;
+    private RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 //    @Autowired
@@ -59,7 +60,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmailAndIsActive(email, isActive);
     }
     @Override
-    public ResponseMessage create(UserModel userModel) throws UserRegisterException, UserNotFoundException {
+    public ResponseMessage create(UserModel userModel) throws UserRegisterException{ // UserNotFoundException {
         if(!checkUserModelForUnique(userModel.getEmail())) {
             throw  new UserRegisterException("User with this email already exists");
         }
@@ -71,10 +72,9 @@ public class UserServiceImpl implements UserService {
 
     }
     @Override
-    public User findByEmail(String email) throws UserNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if(user == null) throw new UserNotFoundException("User with '" + email + "'  email not found");
-        return user;
+    public User findByEmail(String email) { //throws UserNotFoundException {
+//        if(user == null) throw new UserNotFoundException("User with '" + email + "'  email not found");
+        return userRepository.findByEmail(email);
     }
 
     @Override
@@ -99,9 +99,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private User saveAndGetUserByUserModel(UserModel userModel){
-        UserRole roleUser = userRoleRepository.findByRole("ROLE_USER");
-        List<UserRole> userRoleList = new ArrayList<>();
-        userRoleList.add(roleUser);
+        Role roleUser = roleRepository.findByRole("ROLE_USER");
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(roleUser);
 
         User user = User.builder()
                 .email(userModel.getEmail())
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
                 .lastName(userModel.getLastName())
                 .password(passwordEncoder.encode(userModel.getPassword()))
                 .isActive(1)
-                .roles(userRoleList)
+                .roles(roleList)
                 .build();
         return save(user);
     }
@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService {
 //        walletService.save(wallet);
 //    }
 
-    private boolean checkUserModelForUnique(String email) throws UserNotFoundException {
+    private boolean checkUserModelForUnique(String email){//} throws UserNotFoundException {
         return findByEmail(email) == null;
     }
 

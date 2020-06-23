@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public ResponseMessage save(@RequestBody UserModel userModel) throws UserNotFoundException, UserRegisterException {
+    @PostMapping("/register")
+    public ResponseMessage save(@RequestBody UserModel userModel) throws  UserRegisterException {
         return userService.create(userModel);
     }
     @GetMapping

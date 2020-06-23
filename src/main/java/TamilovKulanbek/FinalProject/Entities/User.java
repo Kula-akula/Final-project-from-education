@@ -20,9 +20,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @Column(nullable = false, unique = true)
-    String login;
-
     @Column(nullable = false)
     String password;
 
@@ -48,6 +45,6 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "role_id", nullable = false)}
     )
-    List<UserRole> roles;
+    List<Role> roles;
 
 }

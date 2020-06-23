@@ -1,7 +1,7 @@
 package TamilovKulanbek.FinalProject.jwt;
 
 import TamilovKulanbek.FinalProject.Entities.User;
-import TamilovKulanbek.FinalProject.Entities.UserRole;
+import TamilovKulanbek.FinalProject.Entities.Role;
 import TamilovKulanbek.FinalProject.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,7 +37,7 @@ public class JwtUserDetailsService implements UserDetailsService {
                 .build();
     }
 
-    private List<GrantedAuthority> mapToGrantedAuthorities(List<UserRole> roles){
+    private List<GrantedAuthority> mapToGrantedAuthorities(List<Role> roles){
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole()))
                 .collect(Collectors.toList());

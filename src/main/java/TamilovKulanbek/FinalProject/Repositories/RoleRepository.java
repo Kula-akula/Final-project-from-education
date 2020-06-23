@@ -1,10 +1,10 @@
 package TamilovKulanbek.FinalProject.Repositories;
 
-import TamilovKulanbek.FinalProject.Entities.UserRole;
+import TamilovKulanbek.FinalProject.Entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
-    UserRole findByRole(String role);
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findByRole(String role);
 }

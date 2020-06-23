@@ -12,9 +12,9 @@ import java.util.List;
 public interface UserService extends BaseService<User> {
     User findByEmailAndIsActive(String email, Integer isActive);
 
-    ResponseMessage create(UserModel userModel) throws UserRegisterException, UserNotFoundException;
+    ResponseMessage create(UserModel userModel) throws UserRegisterException;// UserNotFoundException;
 
-    User findByEmail(String email) throws UserNotFoundException;
+    User findByEmail(String email) ;// throws UserNotFoundException;
 
     List<User> findByFirstNameAndLastName(UserFindModel userFindModel) throws UserNotFoundException;
 

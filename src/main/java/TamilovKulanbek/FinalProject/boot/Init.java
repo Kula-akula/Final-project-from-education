@@ -1,13 +1,16 @@
 package TamilovKulanbek.FinalProject.boot;
 
 import TamilovKulanbek.FinalProject.Entities.User;
-import TamilovKulanbek.FinalProject.Entities.UserRole;
+import TamilovKulanbek.FinalProject.Entities.Role;
 import TamilovKulanbek.FinalProject.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -22,13 +25,11 @@ public class Init implements CommandLineRunner {
     private WalletRepository walletRepo;
 
     @Autowired
-    private UserRepository userRepo;
+    private UserRepository userRepository;
 
     @Autowired
-    private UserRoleRepository userRoleRepo;
+    private RoleRepository roleRepository;
 
-
-    List<UserRole> roles;
 
 //    @Autowired
 //    private CartRepos cartRepo;
@@ -38,12 +39,35 @@ public class Init implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //Admin
-        User admin = userRepo.save(new User().builder().login("chef").password(passwordEncoder.encode("chef")).email("chef@gmail.com").isActive(1).roles(roles).build());
-        UserRole userRole = userRoleRepo.save(new UserRole().builder().role("ROLE_ADMIN").build());
-//        cartRepo.save(new Cart().builder().user(admin).totalAmount(new BigDecimal(0)).date(new Date()).build());
+//        ROLES
+//        Role roleAdmin = roleRepository.save(Role.builder()
+//                .role("ROLE_ADMIN")
+//                .build());
+//
+//        Role roleUser = roleRepository.save(Role.builder()
+//                .role("ROLE_USER")
+//                .build());
 //
 //
+//        List<Role> roleList = new ArrayList<>();
+//        roleList.add(roleAdmin);
+//        roleList.add(roleUser);
+
+//        List<Role> userList = new ArrayList<>();
+//        userList.add(roleUser);
+
+//        User admin = userRepository.save(User.builder()
+//                .email("chef@gmail.com")
+//                .password(passwordEncoder.encode("12345"))
+////                .phoneNumber("+996(500)-511-932")
+////                .gender("MALE")
+////                .birthDate(LocalDate.of(1999, 3, 1))
+//                .firstName("Айдин")
+//                .lastName("Сабыров")
+//                .isActive(1)
+//                .roles(roleList)
+//                .build());
+
 //        //Store's wallet
 //        walletRepo.save(new Wallet().builder().requisite("chef0102").balance(new BigDecimal(1000000)).currency(Currency.KGZ).user(admin).bankCard("VISA").build());
 //
