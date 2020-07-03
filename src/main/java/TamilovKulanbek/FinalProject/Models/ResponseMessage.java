@@ -1,5 +1,12 @@
 package TamilovKulanbek.FinalProject.Models;
 
+import lombok.*;
+
+@Getter
+@Setter
+@Data
+@Builder
+@NoArgsConstructor
 public class ResponseMessage {
     String message;
 
@@ -7,3 +14,4 @@ public class ResponseMessage {
         this.message = message;
     }
 }
+

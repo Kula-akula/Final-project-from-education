@@ -4,6 +4,7 @@ import TamilovKulanbek.FinalProject.Entities.User;
 import TamilovKulanbek.FinalProject.Entities.Role;
 import TamilovKulanbek.FinalProject.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,16 +23,19 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userService.findByEmailAndIsActive(email, 1);
+//        User user = userService.findByEmailAndIsActive(email, 1);
+        User user = userService.findByEmail(email);
         if(user == null){
 //            throw new UsernameNotFoundException(String.format("User with email  '%s' not found", email));
             return null;
         }
+        if(user.getIsActive() == 0) throw new DisabledException("User inactive");
 
         return JwtUser.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .password(user.getPassword())
+
                 .isActive(user.getIsActive())
                 .authorities(mapToGrantedAuthorities(user.getRoles()))
                 .build();

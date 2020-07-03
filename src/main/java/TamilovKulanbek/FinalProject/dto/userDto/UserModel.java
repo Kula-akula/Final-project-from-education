@@ -18,4 +18,6 @@ public class UserModel {
     String phoneNumber;
     String firstName;
     String lastName;
+    String address;
+    String shopName;
 }

@@ -4,6 +4,7 @@ import TamilovKulanbek.FinalProject.Entities.User;
 import TamilovKulanbek.FinalProject.Exception.UserNotFoundException;
 import TamilovKulanbek.FinalProject.Exception.UserRegisterException;
 import TamilovKulanbek.FinalProject.Models.ResponseMessage;
+import TamilovKulanbek.FinalProject.Services.BlackListService;
 import TamilovKulanbek.FinalProject.Services.UserService;
 import TamilovKulanbek.FinalProject.dto.userDto.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BlackListService blackListService;
 
     @PostMapping("/register")
     public ResponseMessage save(@RequestBody UserModel userModel) throws  UserRegisterException {
@@ -33,5 +37,8 @@ public class UserController {
     public void deleteById(@PathVariable("id")Long id){
         userService.deleteById(id);
     }
+
+//    @PostMapping("/addBL")
+//    public ResponseMessage
 
 }

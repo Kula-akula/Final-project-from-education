@@ -26,6 +26,11 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
+    public Shop findByEmail(String email) {
+        return shopRepository.findByEmail(email);
+    }
+
+    @Override
     public Shop save(Shop object) {
         return shopRepository.save(object);
     }

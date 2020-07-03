@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(nullable = false)
@@ -29,8 +29,14 @@ public class User {
     @Column(nullable = false)
     String lastName;
 
-    @Column
-    String phone;
+    @Column(nullable = false)
+    String shopName;
+
+    @Column(nullable = false)
+    String address;
+
+    @Column(nullable = false)
+    String phoneNumber;
 
     @Column(nullable = false, unique = true)
     String email;

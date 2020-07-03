@@ -4,6 +4,7 @@ import TamilovKulanbek.FinalProject.Entities.Shop;
 import TamilovKulanbek.FinalProject.Services.ShopService;
 import jdk.nashorn.internal.ir.LoopNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class ShopController {
     @Autowired
     private ShopService shopService;
 
+    @PreAuthorize("ADMIN")
     @PostMapping
     public Shop save(@RequestBody Shop shop){
         return shopService.save(shop);
