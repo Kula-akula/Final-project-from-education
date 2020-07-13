@@ -47,59 +47,54 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                    .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/user/all").permitAll()
-                .antMatchers(HttpMethod.GET, "/user").hasAnyRole("ADMIN","MANAGER")
-                .antMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/user/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "user/**").hasRole("ADMIN")
+                    .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/user/all").permitAll()
+                    .antMatchers(HttpMethod.GET, "/user").hasAnyRole("ADMIN", "MANAGER")
+                    .antMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/user/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.DELETE, "user/**").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/roles/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/roles/change-role").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/roles/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/roles").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/roles/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.DELETE, "/roles/**").hasRole("ADMIN")
 
 //                .antMatchers(HttpMethod.GET, "/shop").hasAnyRole("ADMIN", "MANAGER")
 //                .antMatchers(HttpMethod.POST, "/shop/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.DELETE, "/shop/delete").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/company").permitAll()
-                .antMatchers(HttpMethod.POST, "/company/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/company/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/company").permitAll()
+                    .antMatchers(HttpMethod.GET, "/company/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/company/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.DELETE, "/company/**").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/items").permitAll()
-                .antMatchers(HttpMethod.GET, "/items/*").hasRole("MANAGER")
-                .antMatchers(HttpMethod.POST, "/items").hasRole("MANAGER")
-                .antMatchers(HttpMethod.DELETE, "items/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/items").permitAll()
+                    .antMatchers(HttpMethod.GET, "/items/*").hasRole("MANAGER")
+                    .antMatchers(HttpMethod.POST, "/items/**").hasRole("MANAGER")
+                    .antMatchers(HttpMethod.POST, "/items").hasRole("MANAGER")
+                    .antMatchers(HttpMethod.DELETE, "items/**").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/orders").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/orders/**").hasAnyRole("USER","MANAGER")
-                .antMatchers(HttpMethod.POST, "/orders").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "orders/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/orders").hasRole("USER")
+                    .antMatchers(HttpMethod.GET, "/orders/**").hasAnyRole("USER", "MANAGER")
+                    .antMatchers(HttpMethod.POST, "/orders").hasRole("USER")
+                    .antMatchers(HttpMethod.DELETE, "orders/**").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/delivery/my").hasAnyRole("USER", "MANAGER")
-                .antMatchers(HttpMethod.GET, "/delivery/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/delivery/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/delivery/my").hasAnyRole("USER", "MANAGER")
+                    .antMatchers(HttpMethod.GET, "/delivery/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/delivery/**").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.POST, "/wallet/replenishByYourSelf").hasAnyRole("ADMIN", "MANAGER")
+                    .antMatchers(HttpMethod.POST, "/wallet/replenishByYourSelf").hasAnyRole("ADMIN", "MANAGER")
 
-                .antMatchers(HttpMethod.POST, "/visit/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/visit/**").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/categories").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/categories").hasRole("ADMIN")
 
                 .anyRequest().authenticated()
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-//        http.authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/user").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.POST, "/user/find").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.POST, "/employee").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/employee/**").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/employee"). hasRole("ADMIN");
+                    .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
@@ -127,7 +122,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

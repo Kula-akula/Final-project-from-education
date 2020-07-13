@@ -11,8 +11,12 @@ import java.util.Optional;
 
 @Service
 public class SetServiceImpl implements SetService {
+    private final SetRepository setRepository;
+
     @Autowired
-    private SetRepository setRepository;
+    public SetServiceImpl(SetRepository setRepository) {
+        this.setRepository = setRepository;
+    }
 
     @Override
     public List<Set> getAll() {

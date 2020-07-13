@@ -12,8 +12,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/items")
 public class ItemController {
+    private final ItemService itemService;
+
     @Autowired
-    private ItemService itemService;
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     @GetMapping
     public List<Item> getAll(){

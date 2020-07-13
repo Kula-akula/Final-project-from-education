@@ -29,13 +29,10 @@ public class User {
     @Column(nullable = false)
     String lastName;
 
-    @Column(nullable = false)
-    String shopName;
+//    @Column
+//    String address;
 
-    @Column(nullable = false)
-    String address;
-
-    @Column(nullable = false)
+    @Column
     String phoneNumber;
 
     @Column(nullable = false, unique = true)

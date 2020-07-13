@@ -4,6 +4,7 @@ import TamilovKulanbek.FinalProject.Entities.Role;
 import TamilovKulanbek.FinalProject.Entities.User;
 import TamilovKulanbek.FinalProject.Models.ResponseMessage;
 import TamilovKulanbek.FinalProject.Models.RoleChangeModel;
+import TamilovKulanbek.FinalProject.Models.RoleCreateModel;
 import TamilovKulanbek.FinalProject.Services.RoleService;
 import TamilovKulanbek.FinalProject.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/roles")
 public class RoleController {
-    @Autowired
-    private RoleService roleService;
-    @Autowired
-    private UserService userService;
+    private final RoleService roleService;
+//    private final UserService userService;
 
-    @PostMapping
-    public Role save(@RequestBody Role role){
-        return roleService.save(role);
+    @Autowired
+    public RoleController(RoleService roleService){  //}, UserService userService) {
+        this.roleService = roleService;
+//        this.userService = userService;
     }
+
     @GetMapping
     public List<Role> getAll(){
         return roleService.getAll();
@@ -36,8 +37,12 @@ public class RoleController {
     public void deleteById(@PathVariable("id")Long id){
         roleService.deleteById(id);
     }
-    @PostMapping("/change-role")
+    @PostMapping
+    public ResponseMessage createRole (@RequestBody RoleCreateModel roleCreateModel){
+        return roleService.createNewRole(roleCreateModel);
+    }
+    @PostMapping("/change")
     public ResponseMessage changeUserRole(@RequestBody RoleChangeModel roleChangeModel){
-       return roleService.changeUserRole(roleChangeModel);
+        return roleService.changeUserRole(roleChangeModel);
     }
 }

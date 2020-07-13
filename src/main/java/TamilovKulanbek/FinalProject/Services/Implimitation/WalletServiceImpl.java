@@ -1,7 +1,6 @@
 package TamilovKulanbek.FinalProject.Services.Implimitation;
 
 import TamilovKulanbek.FinalProject.Entities.Company;
-import TamilovKulanbek.FinalProject.Entities.Shop;
 import TamilovKulanbek.FinalProject.Entities.User;
 import TamilovKulanbek.FinalProject.Entities.Wallet;
 import TamilovKulanbek.FinalProject.Exception.UserNotFoundException;
@@ -22,7 +21,6 @@ import java.util.Optional;
 public class WalletServiceImpl implements WalletService {
     @Autowired
     private WalletRepository walletRepository;
-
     @Autowired
     private UserService userService;
 
@@ -67,10 +65,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public WalletResponseModel getWalletModelByUser() throws UserNotFoundException {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = ((UserDetails)principal).getUsername();
-        User user = userService.findByEmail(email);
-        Wallet wallet = getByUser(user);
+        Wallet wallet= getWalletFromToken();
         return WalletResponseModel.builder()
                 .email(wallet.getUser().getEmail())
 //                .requisite(wallet.getRequisite())
@@ -78,12 +73,16 @@ public class WalletServiceImpl implements WalletService {
                 .build();
     }
 
-    @Override
-    public String replenishByYourSelf(WalletReplenishModel walletReplenishModel) {
+    private Wallet getWalletFromToken() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String email = ((UserDetails)principal).getUsername();
         User user = userService.findByEmail(email);
-        Wallet wallet = getByUser(user);
+        return getByUser(user);
+    }
+
+    @Override
+    public String replenishByYourSelf(WalletReplenishModel walletReplenishModel) {
+        Wallet wallet= getWalletFromToken();
         wallet.setBalance(wallet.getBalance().add(walletReplenishModel.getAmount()));
         save(wallet);
         return "You have successfully replenishByYourSelf your balance";

@@ -15,11 +15,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final BlackListService blackListService;
 
     @Autowired
-    private BlackListService blackListService;
+    public UserController(UserService userService, BlackListService blackListService) {
+        this.userService = userService;
+        this.blackListService = blackListService;
+    }
 
     @PostMapping("/register")
     public ResponseMessage save(@RequestBody UserModel userModel) throws  UserRegisterException {

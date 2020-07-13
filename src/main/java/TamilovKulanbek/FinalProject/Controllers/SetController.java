@@ -10,8 +10,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/sets")
 public class SetController {
+    private final SetService setService;
+
     @Autowired
-    private SetService setService;
+    public SetController(SetService setService) {
+        this.setService = setService;
+    }
 
     @PostMapping
     public Set save (@RequestBody Set set){

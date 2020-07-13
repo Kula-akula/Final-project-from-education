@@ -10,15 +10,16 @@ import TamilovKulanbek.FinalProject.Services.CartService;
 import TamilovKulanbek.FinalProject.Services.DeliveryService;
 import TamilovKulanbek.FinalProject.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class DeliveryServiceImpl implements DeliveryService {
     @Autowired
     private DeliveryRepository deliveryRepository;
-    @Autowired
-    private DeliverResponseModel deliverResponseModel;
+//    @Autowired
+//    private DeliverResponseModel deliverResponseModel;
     @Autowired
     private UserService userService;
 
@@ -28,10 +29,10 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Autowired
     private OrderItemService orderItemService;
 
-    @Override
-    public DeliverResponseModel createDelivery(String login) throws WrongOrderException, RejectionNoMoneyException {
-        return deliverResponseModel;
-    }
+//    @Override
+//    public DeliverResponseModel createDelivery(String login) throws WrongOrderException, RejectionNoMoneyException {
+//        return deliveryRepository.save(login);
+//    }
 
     @Override
     public List<Delivery> getAll() {

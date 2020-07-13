@@ -25,6 +25,9 @@ public class Role {
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
     private List<User> users;
 
+//    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
+//    private List<Company> companies;
+
 //    @Column
 //    boolean isActive;
 }

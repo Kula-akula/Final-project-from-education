@@ -12,6 +12,7 @@ import TamilovKulanbek.FinalProject.Services.CompanyService;
 import TamilovKulanbek.FinalProject.Services.WalletService;
 import TamilovKulanbek.FinalProject.dto.CompanyDto.CompanyCreateModel;
 import TamilovKulanbek.FinalProject.dto.CompanyDto.CompanyRequestModel;
+import TamilovKulanbek.FinalProject.dto.CompanyDto.CompanyViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,21 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public List<CompanyViewModel> viewAll() {
+        List<Company> companyList=companyRepository.findAll();
+        List<CompanyViewModel> companyViewModelList=new ArrayList<>();
+        for (Company company:companyList) {
+            CompanyViewModel companyViewModel= CompanyViewModel.builder()
+                    .address(company.getAddress())
+                    .name(company.getName())
+                    .phone(company.getPhone())
+                    .build();
+        companyViewModelList.add (companyViewModel);
+        }
+        return companyViewModelList;
+    }
+
+    @Override
     public Company getById(Long id) {
         Optional<Company> companyOptional=companyRepository.findById(id);
         return companyOptional.orElse(null);
@@ -48,12 +64,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyRequestModel findByName(String name) {
         Company company=companyRepository.findByName(name);
-        CompanyRequestModel requestModel=CompanyRequestModel.builder()
+        return CompanyRequestModel.builder()
                 .name(company.getName())
                 .address(company.getAddress())
                 .phone(company.getPhone())
                 .build();
-        return requestModel;
     }
 
     @Override
@@ -83,23 +98,31 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company deActivateCompany(String email) throws CompanyNotFoundException {
+    public ResponseMessage deActivateCompany(String email) throws CompanyNotFoundException {
         try {
             if (findByEmail(email) == null) throw new CompanyNotFoundException("Company does not exist");
             Company company = findByEmail(email);
             company.setIsActive(0);
-            return save(company);
+            save(company);
+            return new ResponseMessage("Company is deactivated") ;
         }catch (Exception e){
             e.getStackTrace();
         }
-        return null;
+        return  new ResponseMessage("Company does not exist");
     }
 
     @Override
-    public Company reActivateCompany(String email) throws CompanyNotFoundException {
-        Company company=findByEmail(email);
-        company.setIsActive(1);
-        return save(company);
+    public ResponseMessage reActivateCompany(String email) throws CompanyNotFoundException {
+        try {
+            if (findByEmail(email) == null) throw new CompanyNotFoundException("Company does not exist");
+            Company company = findByEmail(email);
+            company.setIsActive(1);
+            save(company);
+            return new ResponseMessage("Company is Re-activated") ;
+        }catch (Exception e){
+            e.getStackTrace();
+        }
+        return  new ResponseMessage("Company does not exist");
     }
 
     private Company saveByCompanyModel(CompanyCreateModel companyCreateModel){

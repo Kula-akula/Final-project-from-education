@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class OrderItemController {
+    private final OrderItemService orderItemService;
+
     @Autowired
-    private OrderItemService orderItemService;
+    public OrderItemController(OrderItemService orderItemService) {
+        this.orderItemService = orderItemService;
+    }
 
     @GetMapping
     public List<OrderItem> getAll(){

@@ -12,10 +12,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/shops")
 public class ShopController {
-    @Autowired
-    private ShopService shopService;
+    private final ShopService shopService;
 
-    @PreAuthorize("ADMIN")
+    @Autowired
+    public ShopController(ShopService shopService) {
+        this.shopService = shopService;
+    }
+
     @PostMapping
     public Shop save(@RequestBody Shop shop){
         return shopService.save(shop);

@@ -19,11 +19,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/cart")
 public class CartController {
-    @Autowired
-    private OrderItemService orderItemService;
+    private final OrderItemService orderItemService;
+
+    private final CartService cartService;
 
     @Autowired
-    private CartService cartService;
+    public CartController(OrderItemService orderItemService, CartService cartService) {
+        this.orderItemService = orderItemService;
+        this.cartService = cartService;
+    }
 //
 //    @GetMapping
 //    public List<Cart> getAll(){

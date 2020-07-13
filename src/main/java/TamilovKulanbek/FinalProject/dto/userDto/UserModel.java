@@ -19,5 +19,4 @@ public class UserModel {
     String firstName;
     String lastName;
     String address;
-    String shopName;
 }

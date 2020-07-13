@@ -13,8 +13,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/wallets")
 public class WalletController {
+    private final WalletService walletService;
+
     @Autowired
-    private WalletService walletService;
+    public WalletController(WalletService walletService) {
+        this.walletService = walletService;
+    }
 
     @GetMapping
     public List<Wallet> getAll(){

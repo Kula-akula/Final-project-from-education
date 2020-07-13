@@ -11,8 +11,12 @@ import java.util.Optional;
 
 @Service
 public class ShopServiceImpl implements ShopService {
+    private final ShopRepository shopRepository;
+
     @Autowired
-    private ShopRepository shopRepository;
+    public ShopServiceImpl(ShopRepository shopRepository) {
+        this.shopRepository = shopRepository;
+    }
 
     @Override
     public List<Shop> getAll() {
@@ -22,7 +26,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public Shop getById(Long id) {
         Optional<Shop> optionalShop=shopRepository.findById(id);
-        return optionalShop.get();
+        return optionalShop.orElse(null);
     }
 
     @Override
