@@ -1,16 +1,16 @@
 package TamilovKulanbek.FinalProject.Services.Implimitation;
 
-import TamilovKulanbek.FinalProject.Entities.Cart;
-import TamilovKulanbek.FinalProject.Entities.Role;
-import TamilovKulanbek.FinalProject.Entities.User;
-import TamilovKulanbek.FinalProject.Entities.Wallet;
+import TamilovKulanbek.FinalProject.Entities.*;
 import TamilovKulanbek.FinalProject.Exception.UserNotFoundException;
 import TamilovKulanbek.FinalProject.Models.ResponseMessage;
+import TamilovKulanbek.FinalProject.Repositories.AuthLogRepository;
 import TamilovKulanbek.FinalProject.Repositories.UserRepository;
 import TamilovKulanbek.FinalProject.Repositories.RoleRepository;
+import TamilovKulanbek.FinalProject.Services.AuthLogService;
 import TamilovKulanbek.FinalProject.Services.CartService;
 import TamilovKulanbek.FinalProject.Services.UserService;
 import TamilovKulanbek.FinalProject.Services.WalletService;
+import TamilovKulanbek.FinalProject.dto.userDto.UserActivationModel;
 import TamilovKulanbek.FinalProject.dto.userDto.UserModel;
 import TamilovKulanbek.FinalProject.dto.userDto.UserFindModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +37,10 @@ public class UserServiceImpl implements UserService {
     private WalletService walletService;
     @Autowired
     private CartService cartService;
+    @Autowired
+    private AuthLogRepository authLogRepository;
+    @Autowired
+    private AuthLogService authLogService;
 
 
 
@@ -104,16 +108,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User reActivateUser(String email) throws UserNotFoundException {
-        User user = findByEmail(email);
-        user.setIsActive(1);
-        return save(user);
+    public ResponseMessage userActivation(UserActivationModel userActivationModel) throws UserNotFoundException {
+        if (findByEmail(userActivationModel.getEmail())==null) return new ResponseMessage("User is not found");
+        if (userActivationModel.getActivation()<0||userActivationModel.getActivation()>1) return new ResponseMessage("Invalid activation number");
+        User user = findByEmail(userActivationModel.getEmail());
+        user.setIsActive(userActivationModel.getActivation());
+        String deActivationMessage="User of '"+userActivationModel.getEmail()+"' is deactivated";
+        String reActivationMessage="User of '"+userActivationModel.getEmail()+"' is reactivated";
+//        authLogRepository.findByUser(user).setIsRecovered(authLogRepository.findByUser(user).getIsRecovered()+1);
+//        authLog.setIsRecovered(authLog.getIsRecovered()+1);
+//        authLogService.save(authLog);
+        save(user);
+        if (userActivationModel.getActivation()==0) return new ResponseMessage(deActivationMessage);
+        else return new ResponseMessage(reActivationMessage);
     }
 
 
 
     private User saveByUserModel(UserModel userModel){
-        Role roleUser = roleRepository.findByRole("USER");
+        Role roleUser = roleRepository.findByRole("ROLE_USER");
         List<Role> roleList = new ArrayList<>();
         roleList.add(roleUser);
 

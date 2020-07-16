@@ -1,10 +1,12 @@
 package TamilovKulanbek.FinalProject.Services.Implimitation;
 
 import TamilovKulanbek.FinalProject.Entities.Category;
+import TamilovKulanbek.FinalProject.Entities.Company;
 import TamilovKulanbek.FinalProject.Entities.Item;
 import TamilovKulanbek.FinalProject.Enums.Status;
 import TamilovKulanbek.FinalProject.Repositories.ItemRepository;
 import TamilovKulanbek.FinalProject.Services.CategoryService;
+import TamilovKulanbek.FinalProject.Services.CompanyService;
 import TamilovKulanbek.FinalProject.Services.ItemService;
 import TamilovKulanbek.FinalProject.dto.ItemDto.ItemModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CompanyService companyService;
 
     @Override
     public List<Item> getAll() {
@@ -50,8 +54,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item create(ItemModel itemModel) {
         Category category = categoryService.getById(itemModel.getCategory());
+        Company company=companyService.getById(itemModel.getCompany());
         Item item = Item.builder()
                 .itemName(itemModel.getItemName())
+                .company(company)
                 .category(category)
                 .price(itemModel.getPrice())
                 .discountPercentages(itemModel.getDiscountPercentages())

@@ -12,7 +12,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/order")
 public class OrderItemController {
     private final OrderItemService orderItemService;
 

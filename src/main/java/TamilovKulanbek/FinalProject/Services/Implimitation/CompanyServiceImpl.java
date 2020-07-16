@@ -87,17 +87,6 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public ResponseMessage create(CompanyCreateModel companyCreateModel) {
-        if (findByEmail(companyCreateModel.getEmail()) !=null)
-            return new ResponseMessage("Company already exists");
-
-        Company company=saveByCompanyModel(companyCreateModel);
-        createCompanyWallet(company);
-
-        return new ResponseMessage("Company was successfully created");
-    }
-
-    @Override
     public ResponseMessage deActivateCompany(String email) throws CompanyNotFoundException {
         try {
             if (findByEmail(email) == null) throw new CompanyNotFoundException("Company does not exist");
@@ -125,8 +114,19 @@ public class CompanyServiceImpl implements CompanyService {
         return  new ResponseMessage("Company does not exist");
     }
 
+    @Override
+    public ResponseMessage create(CompanyCreateModel companyCreateModel) {
+        if (findByEmail(companyCreateModel.getEmail()) !=null)
+            return new ResponseMessage("Company already exists");
+
+        Company company=saveByCompanyModel(companyCreateModel);
+        createCompanyWallet(company);
+
+        return new ResponseMessage("Company was successfully created");
+    }
+
     private Company saveByCompanyModel(CompanyCreateModel companyCreateModel){
-        Role roleCompany = roleRepository.findByRole("MANAGER");
+        Role roleCompany = roleRepository.findByRole("ROLE_MANAGER");
         List<Role> roleList = new ArrayList<>();
         roleList.add(roleCompany);
 

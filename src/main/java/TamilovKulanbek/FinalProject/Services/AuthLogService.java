@@ -13,6 +13,10 @@ public interface AuthLogService extends BaseService<AuthLog> {
 
     Integer countByUserAndStatus(Status status, String email, Integer isRecovered);
 
+    Integer countByCompanyAndStatus(Status status, String email, Integer isRecovered);
+
+    Integer countByShopAndStatus(Status status, String email, Integer isRecovered);
+
     List<AuthLog> findAllByUserAndStatus(String email, Status status);
 
     List<AuthLog> saveAll(List<AuthLog> authLogs);

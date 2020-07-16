@@ -5,6 +5,7 @@ import TamilovKulanbek.FinalProject.Exception.UserNotFoundException;
 import TamilovKulanbek.FinalProject.Exception.UserRegisterException;
 import TamilovKulanbek.FinalProject.Exception.WrongUserRegistration;
 import TamilovKulanbek.FinalProject.Models.ResponseMessage;
+import TamilovKulanbek.FinalProject.dto.userDto.UserActivationModel;
 import TamilovKulanbek.FinalProject.dto.userDto.UserAuth;
 import TamilovKulanbek.FinalProject.dto.userDto.UserModel;
 import TamilovKulanbek.FinalProject.dto.userDto.UserFindModel;
@@ -24,6 +25,6 @@ public interface UserService extends BaseService<User> {
 
     User deActivateUser(String email) throws UserNotFoundException;
 
-    User reActivateUser(String email) throws UserNotFoundException;
+    ResponseMessage userActivation(UserActivationModel userActivationModel) throws UserNotFoundException;
 
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sets")
+@RequestMapping("/set")
 public class SetController {
     private final SetService setService;
 

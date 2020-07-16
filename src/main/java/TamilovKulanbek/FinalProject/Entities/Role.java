@@ -24,6 +24,10 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
     private List<User> users;
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
+    private List<Company> companies;
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
+    private List<Shop> shops;
 
 //    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
 //    private List<Company> companies;

@@ -6,6 +6,7 @@ import TamilovKulanbek.FinalProject.Exception.UserRegisterException;
 import TamilovKulanbek.FinalProject.Models.ResponseMessage;
 import TamilovKulanbek.FinalProject.Services.BlackListService;
 import TamilovKulanbek.FinalProject.Services.UserService;
+import TamilovKulanbek.FinalProject.dto.userDto.UserActivationModel;
 import TamilovKulanbek.FinalProject.dto.userDto.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,11 @@ public class UserController {
     public ResponseMessage save(@RequestBody UserModel userModel) throws  UserRegisterException {
         return userService.create(userModel);
     }
+    @PostMapping
+    public ResponseMessage activationController (@RequestBody UserActivationModel userActivationModel) throws UserNotFoundException {
+        return userService.userActivation(userActivationModel);
+    }
+
     @GetMapping
     public List<User> getAll(){
         return userService.getAll();

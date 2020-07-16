@@ -25,11 +25,16 @@ public class Delivery {
     Shop shop;
 
     @ManyToOne
+    @JoinColumn(name = "companies_id", referencedColumnName = "id")
+    Company company;
+
+    @ManyToOne
     @JoinColumn(name = "order_items_id", referencedColumnName = "id")
     OrderItem orderItem;
 
     @Column(name = "price", nullable = false)
     BigDecimal price;
+
 
     @Column(name = "is_deliver")
     Boolean deliver;

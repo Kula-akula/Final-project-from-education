@@ -1,10 +1,14 @@
 package TamilovKulanbek.FinalProject.Services.Implimitation;
 
 import TamilovKulanbek.FinalProject.Entities.AuthLog;
+import TamilovKulanbek.FinalProject.Entities.Company;
+import TamilovKulanbek.FinalProject.Entities.Shop;
 import TamilovKulanbek.FinalProject.Entities.User;
 import TamilovKulanbek.FinalProject.Enums.Status;
 import TamilovKulanbek.FinalProject.Repositories.AuthLogRepository;
 import TamilovKulanbek.FinalProject.Services.AuthLogService;
+import TamilovKulanbek.FinalProject.Services.CompanyService;
+import TamilovKulanbek.FinalProject.Services.ShopService;
 import TamilovKulanbek.FinalProject.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,10 @@ public class AuthLogServiceImpl implements AuthLogService {
     private AuthLogRepository authLogRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CompanyService companyService;
+    @Autowired
+    private ShopService shopService;
 
     @Override
     public AuthLog save(AuthLog authLog) {
@@ -42,16 +50,35 @@ public class AuthLogServiceImpl implements AuthLogService {
     }
 
     @Override
-    public AuthLog create(String email, Status status){
-        User user = userService.findByEmail(email);
-        AuthLog authLog = AuthLog.builder()
-                .user(user)
-                .status(status)
-                .isRecovered(0)
-                .build();
-
-        return save(authLog);
+    public AuthLog create(String email, Status status) {
+        if (userService.findByEmail(email) != null) {
+            User user = userService.findByEmail(email);
+            AuthLog authLog = AuthLog.builder()
+                    .user(user)
+                    .status(status)
+                    .isRecovered(0)
+                    .build();
+            return save(authLog);
+        } else if (companyService.findByEmail(email) != null) {
+            Company company = companyService.findByEmail(email);
+            AuthLog authLog = AuthLog.builder()
+                    .company(company)
+                    .status(status)
+                    .isRecovered(0)
+                    .build();
+            return save(authLog);
+        } else if (shopService.findByEmail(email) != null) {
+            Shop shop = shopService.findByEmail(email);
+            AuthLog authLog = AuthLog.builder()
+                    .shop(shop)
+                    .status(status)
+                    .isRecovered(0)
+                    .build();
+            return save(authLog);
+        }
+        return null;
     }
+
 
 //    @Override
 //    public Integer countAllByStatusAndUserAndRecovery(Status status, String email, boolean isRecovery) {
@@ -60,19 +87,33 @@ public class AuthLogServiceImpl implements AuthLogService {
 //    }
 
     @Override
-    public Integer countByUserAndStatus(Status status, String email, Integer isRecovered) {
-        User user = userService.findByEmail(email);
-        return authLogRepository.getCount(status, user, isRecovered);
+    public Integer countByUserAndStatus (Status status, String email, Integer isRecovered){
+            User user = userService.findByEmail(email);
+            return authLogRepository.getCountUser(status, user, isRecovered);
+        }
+
+    @Override
+    public Integer countByCompanyAndStatus(Status status, String email, Integer isRecovered) {
+        Company company=companyService.findByEmail(email);
+        return authLogRepository.getCountCompany(status,company,isRecovered);
     }
 
     @Override
-    public List<AuthLog> findAllByUserAndStatus(String email, Status status) {
-        User user = userService.findByEmail(email);
-        return authLogRepository.findAllByUserAndStatus(user, status);
+    public Integer countByShopAndStatus(Status status, String email, Integer isRecovered) {
+        Shop shop=shopService.findByEmail(email);
+        return authLogRepository.getCountShop(status,shop,isRecovered);
     }
 
     @Override
-    public List<AuthLog> saveAll(List<AuthLog> authLogs) {
-        return authLogRepository.saveAll(authLogs);
+        public List<AuthLog> findAllByUserAndStatus (String email, Status status){
+            User user = userService.findByEmail(email);
+            return authLogRepository.findAllByUserAndStatus(user, status);
+        }
+
+        @Override
+        public List<AuthLog> saveAll (List < AuthLog > authLogs) {
+            return authLogRepository.saveAll(authLogs);
+        }
     }
-}
+
+

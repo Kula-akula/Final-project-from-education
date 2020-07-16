@@ -21,9 +21,6 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "item_type")
-    String type;
-
     @Column(name = "item_status")
     Status status;
 
@@ -35,11 +32,15 @@ public class Item {
     Company company;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     Category category;
 
     @Column(name = "price", nullable = false)
     BigDecimal price;
+
+    @Column(name = "type")
+    String type;
+
 
     @Column(name = "discount_percentages")
     Integer discountPercentages;

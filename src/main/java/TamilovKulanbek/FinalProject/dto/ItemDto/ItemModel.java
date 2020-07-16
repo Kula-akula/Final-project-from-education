@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemModel {
-
+    Long company;
     String itemName;
     Long category;
     BigDecimal price;

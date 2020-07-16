@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,9 +84,12 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public String replenishByYourSelf(WalletReplenishModel walletReplenishModel) {
         Wallet wallet= getWalletFromToken();
+        if (walletReplenishModel.getAmount().compareTo(BigDecimal.ZERO)<=0){
+            return "Invalid count";
+        }
         wallet.setBalance(wallet.getBalance().add(walletReplenishModel.getAmount()));
         save(wallet);
-        return "You have successfully replenishByYourSelf your balance";
+        return "You have successfully replenish by yourself your balance";
 
     }
 

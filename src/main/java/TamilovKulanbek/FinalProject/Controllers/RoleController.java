@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/role")
 public class RoleController {
     private final RoleService roleService;
 //    private final UserService userService;

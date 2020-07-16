@@ -40,8 +40,18 @@ public class AuthLog {
     }
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     User user;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    Company company;
+
+    @ManyToOne
+    @JoinColumn(name = "shop_id", referencedColumnName = "id")
+    Shop shop;
+
+
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

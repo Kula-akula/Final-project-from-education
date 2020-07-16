@@ -45,12 +45,7 @@ public class Shop {
     Integer isActive;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = {@JoinColumn(name = "user_id", nullable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", nullable = false)}
-    )
+    @ManyToMany
     List<Role> roles;
 
 

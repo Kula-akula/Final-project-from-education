@@ -1,6 +1,7 @@
 package TamilovKulanbek.FinalProject.Entities;
 
 import TamilovKulanbek.FinalProject.Enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,7 +21,8 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     Cart cart;
 

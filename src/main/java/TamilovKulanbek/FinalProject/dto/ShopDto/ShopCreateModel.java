@@ -1,20 +1,21 @@
-package TamilovKulanbek.FinalProject.dto.userDto;
+package TamilovKulanbek.FinalProject.dto.ShopDto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserModel {
-    String email;
-    String password;
-    String phoneNumber;
+public class ShopCreateModel {
+    String shopName;
+    String shopAddress;
     String firstName;
     String lastName;
-    String address;
+    String phone;
+    String email;
+    String password;
 }
